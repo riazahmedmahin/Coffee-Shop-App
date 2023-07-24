@@ -1,5 +1,6 @@
 //import 'package:first_app/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_app/pages.dart/resetpass.dart';
 import 'package:first_app/widgets.dart/button.dart';
 import 'package:first_app/widgets.dart/textfield.dart';
 import 'package:first_app/widgets.dart/tile.dart';
@@ -90,7 +91,13 @@ class _HomeState extends State<Home> {
                child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                  children: [
-                   Text('Forget password?'),
+                   GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                        return ResetPass();
+                      }));
+                    },
+                    child: Text('Forget password?')),
                  ],
                ),
              ),
