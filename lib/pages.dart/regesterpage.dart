@@ -16,34 +16,48 @@ class  Regerter extends StatefulWidget {
 }
 
 class _RegerterState extends State<Regerter> {
+
+//------------controller---------
   final emailController = TextEditingController();
-
   final passwordController = TextEditingController();
- final concontroller = TextEditingController();
+  final configcontroller = TextEditingController();
+ //-----------------------------------
+
+
+ //--------------- signup----------------
   void SignUp() async {
-
-    showDialog(
-        context: context,
-        builder: (context){
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
-    );
+    if(passconfig()) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+      );
 
 //signInWithEmailAndPassword
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
 
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email : emailController.text,
-      password : passwordController.text,
-    
-      
-    
-    );
+      );
 
-    Navigator.pop(context);
+      Navigator.pop(context);
+    }
   }
+//----------------------------------------------
+
+//------------ pass and conf pass check-----------
+  bool passconfig (){
+    if(passwordController.text.trim()==configcontroller.text.trim()){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+//-----------------------------------------------
 
   @override
   Widget build(BuildContext context) {
@@ -89,11 +103,11 @@ class _RegerterState extends State<Regerter> {
                 obscureText: true,
 
               ),
-            
+              //-------------- confrim pass----------
 
              SizedBox(height: 5,),
               Text_Feild(
-                controller: concontroller,
+                controller: configcontroller,
                 hintText: 'Confrim Password',
                 obscureText: true,
 
